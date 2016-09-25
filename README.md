@@ -1,6 +1,6 @@
 
 <h1 align="center">:pencil2: canvas</h1>
-<h3 align="center">Small `<canvas> wrapper</h3>
+<h3 align="center">Small canvas wrapper</h3>
 
 <div align="center">
   <!-- License -->
