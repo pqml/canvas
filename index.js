@@ -2,50 +2,45 @@
 
 function canvas (opts) {
   opts = opts || {}
+
   var el = opts.el || document.createElement('canvas')
-  var context = el.getContext('2d')
-  var ratio = opts.ratio || window.devicePixelRatio || 1
-  var width = 0
-  var height = 0
-
-  if (opts.el) {
-    width = opts.el.width
-    height = opts.el.height
-  }
-
-  if (opts.parent) opts.parent.appendChild(el)
-
   var api = {
     el: el,
-    context: context,
-    ctx: context,
-    ratio: ratio,
-    width: width,
-    height: height,
+    context: el.getContext('2d'),
+    ratio: opts.ratio || window.devicePixelRatio || 1,
+    width: 0,
+    height: 0,
     destroy: destroy,
     resize: resize,
     clear: clear
   }
 
+  if (opts.parent) opts.parent.appendChild(api.el)
+
+  if (opts.el) {
+    api.width = opts.el.width
+    api.height = opts.el.height
+  }
+
   function resize (w, h) {
-    width = w
-    height = h
-    el.width = w
-    el.height = h
-    el.style.width = w + 'px'
-    el.style.height = h + 'px'
+    api.width = w
+    api.height = h
+    api.el.width = w
+    api.el.height = h
+    api.el.style.width = w + 'px'
+    api.el.style.height = h + 'px'
     return api
   }
 
   function clear () {
-    el.context.clearRect(0, 0, width * ratio, height * ratio)
+    api.context.clearRect(0, 0, api.width * api.ratio, api.height * api.ratio)
     return api
   }
 
   function destroy () {
-    context = null
-    if (el.parentNode) el.parentNode.removeChild(el)
-    el = null
+    api.context = null
+    if (api.el.parentNode) api.el.parentNode.removeChild(api.el)
+    api.el = null
   }
 
   return api
